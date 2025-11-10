@@ -945,7 +945,103 @@ function displayExtra(data) {
 
   `;
 }
-    
+
+// === 🍏 Spoonacular API (Nutrition Tips) ===
+const spoonacularApiKey = "9e88d623c5684caaa22da0a024ad710f"; 
+const recipesContainer = document.getElementById("recipes-container");
+const searchBtn = document.getElementById("searchNutritionBtn");
+const searchInput = document.getElementById("nutritionSearch");
+const suggestionsContainer = document.getElementById("suggestions");
+
+  loadNutritionTips("healthy fitness meal");
+
+searchBtn.addEventListener("click", () => {
+  const query = searchInput.value.trim();
+  if (query) {
+    loadNutritionTips(query);
+  }
+});
+
+function loadNutritionTips(query) {
+  recipesContainer.innerHTML = "<p class='text-center'>Loading recipes...</p>";
+  suggestionsContainer.innerHTML = "";
+
+  fetch(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=3&addRecipeNutrition=true&apiKey=${spoonacularApiKey}`)
+    .then(res => res.json())
+    .then(data => {
+      recipesContainer.innerHTML = "";
+      if (!data.results || data.results.length === 0) {
+        recipesContainer.innerHTML = "<p class='text-center text-danger'>No recipes found. Try another keyword!</p>";
+        return;
+      }
+
+      data.results.forEach(recipe => {
+  const card = document.createElement("div");
+  card.classList.add("col-md-4");
+
+  let calories = "-", protein = "-", fat = "-", carbs = "-";
+  if (recipe.nutrition && recipe.nutrition.nutrients) {
+    recipe.nutrition.nutrients.forEach(nutrient => {
+      switch(nutrient.name) {
+        case "Calories":
+          calories = Math.round(nutrient.amount);
+          break;
+        case "Protein":
+          protein = Math.round(nutrient.amount);
+          break;
+        case "Fat":
+          fat = Math.round(nutrient.amount);
+          break;
+        case "Carbohydrates":
+          carbs = Math.round(nutrient.amount);
+          break;
+      }
+    });
+  }
+
+  card.innerHTML = `
+    <div class="card mb-4 shadow-sm">
+      <img src="${recipe.image}" class="card-img-top" alt="${recipe.title}">
+      <div class="card-body">
+        <h5 class="card-title">${recipe.title}</h5>
+        <p><strong>Calories:</strong> ${calories} kcal</p>
+        <p><strong>Protein:</strong> ${protein} g</p>
+        <p><strong>Fat:</strong> ${fat} g</p>
+        <p><strong>Carbs:</strong> ${carbs} g</p>
+        <a href="https://spoonacular.com/recipes/${recipe.title.replace(/\s+/g, '-')}-${recipe.id}" target="_blank" class="btn btn-outline-danger btn-sm">View Recipe</a>
+      </div>
+    </div>
+  `;
+  recipesContainer.appendChild(card);
+});
+
+
+      fetch(`https://api.spoonacular.com/food/ingredients/autocomplete?query=${query}&number=3&apiKey=${spoonacularApiKey}`)
+        .then(res => res.json())
+        .then(suggestions => {
+          if (suggestions.length > 0) {
+            suggestionsContainer.innerHTML = "<strong>Try also:</strong> ";
+            suggestions.forEach((item, index) => {
+              const btn = document.createElement("button");
+              btn.className = "btn btn-outline-secondary btn-sm mx-1 my-1";
+              btn.textContent = item.name;
+              btn.addEventListener("click", () => {
+                searchInput.value = item.name;
+                loadNutritionTips(item.name);
+              });
+              suggestionsContainer.appendChild(btn);
+            });
+          }
+        })
+        .catch(err => console.error("Suggestions error:", err));
+
+    })
+    .catch(err => {
+      console.error(err);
+      recipesContainer.innerHTML = "<p class='text-center text-danger'>Error loading recipes. Try again later.</p>";
+    });
+}
+
 
 });
 

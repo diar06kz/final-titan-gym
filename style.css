@@ -17,6 +17,42 @@ body {
   min-height: 100vh;
 }
 
+#nutrition-section {
+  background-color: #fff8f8;
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 40px;
+}
+
+.night-theme #nutrition-section {
+  background-color: #4b0f25;
+  
+}
+#nutrition-section h2 {
+  color: #e75480;
+  font-weight: bold;
+}
+
+#nutritionSearch {
+  border: 2px solid #e75480;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+#recipes-container .card {
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+#recipes-container .card:hover {
+  transform: scale(1.03);
+}
+
+#suggestions button {
+  cursor: pointer;
+}
+
 .input-group-text {
   background: transparent !important;
   border: none !important;
