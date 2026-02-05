@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bloom GYM</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="notification-container"></div>
+
+  
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f4c2c2;">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold text-brown" href="index.html">Bloom GYM</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item"><a class="nav-link text-brown fw-semibold" href="profile.html">My profile</a></li>
+          <li class="nav-item"><a class="nav-link text-brown fw-semibold" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-brown fw-semibold" href="programs.html">Programs</a></li>
+
+          <li class="nav-item">
+            <a class="nav-link text-brown fw-semibold" id="navAuthLink" href="#" data-bs-toggle="modal" data-bs-target="#authModal">Sign Up/In</a>
+          </li>
+
+          <li class="nav-item ms-3">
+            <label class="switch">
+              <input type="checkbox" id="themeToggle" />
+              <span class="slider"></span>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content p-4">
+
+        <div id="signupFormBlock">
+          <h4 class="text-center mb-3">Sign Up</h4>
+          <form id="signupForm">
+            <div class="mb-2">
+              <label for="signupName" class="form-label fw-semibold">Name</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                <input type="text" id="signupName" class="form-control" required />
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <label for="signupSurname" class="form-label fw-semibold">Surname</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                <input type="text" id="signupSurname" class="form-control" required />
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <label for="signupEmail" class="form-label fw-semibold">Email</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                <input type="email" id="signupEmail" class="form-control" required />
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <label for="signupPhone" class="form-label fw-semibold">Phone</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                <input type="tel" id="signupPhone" class="form-control" placeholder="+7 (___) ___-__-__" />
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <label for="signupPassword" class="form-label fw-semibold">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                <input type="password" id="signupPassword" class="form-control" minlength="8" required />
+              </div>
+            </div>
+
+            <div id="signupGlobalError" class="text-danger mb-2" style="display:none;"></div>
+            <button type="submit" class="btn btn-dark w-100 mb-2">Create Account</button>
+          </form>
+
+          <p class="text-center m-0">
+            Already have an account?
+            <span id="switchToSignIn" class="link-accent">Sign In</span>
+          </p>
+        </div>
+
+        <div id="signinFormBlock" style="display:none;">
+          <h4 class="text-center mb-3">Sign In</h4>
+          <form id="signinForm">
+            <div class="mb-2">
+              <label for="signinEmail" class="form-label fw-semibold">Email</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                <input type="email" id="signinEmail" class="form-control" required />
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <label for="signinPassword" class="form-label fw-semibold">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                <input type="password" id="signinPassword" class="form-control" required />
+              </div>
+            </div>
+
+            <div id="signinGlobalError" class="text-danger mb-2" style="display:none;"></div>
+            <button type="submit" class="btn btn-dark w-100 mb-2">Log In</button>
+          </form>
+
+          <p class="text-center m-0">
+            Don't have an account?
+            <span id="switchToSignUp" class="link-accent">Sign Up</span>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid my-4 px-sm-2 px-lg-4">
+    <h1 id="welcomeMessage" class="grid-header py-3 mb-4 text-center fw-bold"></h1>
+
+    <div class="row align-items-start gy-4">
+      <div class="col-sm-12 col-md-4 col-lg-4 p-3 p-lg-4">
+        <aside class="grid-sidebar">
+          <h2>Our Services</h2>
+          <ul class="mt-3 ms-2">
+            <li>Personal Training</li>
+            <li>Group Classes</li>
+            <li>Nutrition Guidance</li>
+            <li>Wellness Coaching</li>
+          </ul>
+        </aside>
+      </div>
+
+      <div class="col-sm-12 col-md-8 col-lg-8 p-3 p-lg-4">
+        <main class="grid-main">
+          <h2 class="mb-3">About Us</h2>
+
+          <section id="stats" class="stats-section">
+            <div class="stat">
+              <h2 class="count" data-target="50">0</h2>
+              <p>Professional Trainers</p>
+            </div>
+            <div class="stat">
+              <h2 class="count" data-target="1200">0</h2>
+              <p>Active Members</p>
+            </div>
+            <div class="stat">
+              <h2 class="count" data-target="24">0</h2>
+              <p>Open Hours</p>
+            </div>
+            <div class="stat">
+              <h2 class="count" data-target="10">0</h2>
+              <p>Fitness Awards</p>
+            </div>
+          </section>
+
+          <h2><i>Stronger Every Day</i></h2>
+
+          <div class="copy-snippet mt-4">
+            <q class="quote-to-start snippet-text">
+              If you want to change your life, start today — every big journey begins with a single step.
+            </q>
+          </div>
+
+          <div id="dateTime" class="text-center mt-5 fs-5 fw-semibold"></div>
+        </main>
+      </div>
+    </div>
+
+    <div class="row text-center mt-4 px-sm-3 px-lg-5">
+      <div class="col-sm-12 col-md-4 mb-4">
+        <img data-src="pictures/photo1.jpg" class="img-fluid big-photo lazy shadow-sm" alt="Gym photo 1" />
+      </div>
+      <div class="col-sm-12 col-md-4 mb-4">
+        <img data-src="pictures/photo2.jpg" class="img-fluid big-photo circle-img lazy shadow-sm" alt="Gym photo 2" />
+      </div>
+      <div class="col-sm-12 col-md-4 mb-4">
+        <img data-src="pictures/photo3.jpg" class="img-fluid big-photo lazy shadow-sm" alt="Gym photo 3" />
+      </div>
+    </div>
+  </div>
+
+  <footer class="grid-footer py-3 px-4 mt-5 text-center">
+    Team: Bloom Creators | Members: Yun Violetta, Musagali Kundyz, Dinara Nurbauly | Group SE-2408
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
