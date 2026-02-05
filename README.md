@@ -788,8 +788,8 @@ Screenshots are stored in `/screenshots` folder.
 
 ## Deployment (Required)
 
-Deployed API URL: **<PASTE_DEPLOY_URL_HERE>**  
-GitHub Repository: **<PASTE_GITHUB_URL_HERE>**
+Deployed API URL: https://final-bloom-gym.onrender.com 
+GitHub Repository: https://github.com/Kundyz882/Final-Bloom-Gym.git
 
 Environment variables required on platform (Render/Railway/Replit):
 - `MONGO_URI`
