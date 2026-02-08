@@ -1,6 +1,6 @@
-# Bloom GYM — Final Project (Node.js + Express + MongoDB)
+# Titan GYM — Final Project (Node.js + Express + MongoDB)
 
-Bloom GYM is a full-stack fitness booking web application that allows users to register, log in, manage their profile, browse gym programs, and book training sessions.
+Tutan GYM is a full-stack fitness booking web application that allows users to register, log in, manage their profile, browse gym programs, and book training sessions.
 
 Backend is built with **Node.js + Express**, database is **MongoDB**, authentication is **JWT**, passwords are hashed with **bcrypt**, validation uses **Joi**, and advanced features include **RBAC roles** + **SMTP welcome email** (Nodemailer, optional).
 
@@ -98,7 +98,7 @@ Frontend:
 ## Project Structure
 
 ```
-bloom-gym-backend/
+titan-gym-backend/
 │
 ├── src/
 │   ├── config/
@@ -173,7 +173,7 @@ npm -v
 ### 1) Download / Clone project
 ```bash
 git clone <YOUR_GITHUB_REPO_URL>
-cd bloom-gym-backend
+cd titan-gym-backend
 ```
 
 ### 2) Install dependencies
@@ -186,7 +186,7 @@ Create `.env` in project root (same folder as `package.json`):
 
 ```env
 PORT=5001
-MONGO_URI=mongodb://127.0.0.1:27017/bloom_gym
+MONGO_URI=mongodb://127.0.0.1:27017/titan_gym
 JWT_SECRET=super_secret_key_change_me
 JWT_EXPIRES_IN=7d
 
@@ -196,7 +196,7 @@ MAIL_HOST=smtp.sendgrid.net
 MAIL_PORT=587
 MAIL_USER=apikey
 MAIL_PASS=YOUR_API_KEY
-MAIL_FROM="Bloom GYM <no-reply@bloomgym.com>"
+MAIL_FROM="Bloom GYM <no-reply@titangym.com>"
 ENABLE_EMAIL=false
 ```
 
@@ -724,8 +724,8 @@ Authorization: Bearer <JWT_TOKEN>
   "bookings": [
     {
       "_id": "BOOKING_ID",
-      "programTitle": "Yoga Flow",
-      "category": "yoga",
+      "programTitle": "Kickboxing",
+      "category": "sport",
       "date": "2026-02-10T00:00:00.000Z",
       "time": "12:00",
       "status": "booked",
@@ -761,7 +761,7 @@ MAIL_HOST=...
 MAIL_PORT=587
 MAIL_USER=...
 MAIL_PASS=...
-MAIL_FROM="Bloom GYM <no-reply@bloomgym.com>"
+MAIL_FROM="Titan GYM <no-reply@bloomgym.com>"
 ENABLE_EMAIL=true
 ```
 
@@ -806,4 +806,5 @@ Backend start command:
 ## Titan Creator
 - Gizatov Diar
   
+
 
