@@ -803,7 +803,7 @@ Backend start command:
 
 ---
 
-## Bloom Creators
-- Musagali Kundyz
-- Yun Violetta
-- Dinara Nurbauly
+## Titan Creator
+- Gizatov Diar
+  
+
