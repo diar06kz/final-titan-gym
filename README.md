@@ -185,7 +185,7 @@ npm install
 Create `.env` in project root (same folder as `package.json`):
 
 ```env
-PORT=5000
+PORT=5001
 MONGO_URI=mongodb://127.0.0.1:27017/bloom_gym
 JWT_SECRET=super_secret_key_change_me
 JWT_EXPIRES_IN=7d
@@ -212,10 +212,10 @@ npm run dev
 ```
 
 Backend will run at:
-- `http://localhost:5000`
+- `http://localhost:5001`
 
 Test quickly:
-- `GET http://localhost:5000/` → `{ "message": "API is running" }`
+- `GET http://localhost:5001/` → `{ "message": "API is running" }`
 
 ### 5) Run frontend
 Open `frontend/` with VS Code and run **Live Server** on:
@@ -225,7 +225,7 @@ Open `frontend/` with VS Code and run **Live Server** on:
 
 Frontend uses:
 ```js
-const API_BASE = "http://localhost:5000";
+const API_BASE = "http://localhost:5001";
 ```
 
 ---
@@ -285,7 +285,7 @@ If role is NOT `premium` and NOT `admin`:
 ## API Documentation (Detailed)
 
 ### Base URL (Local)
-`http://localhost:5000`
+`http://localhost:5001`
 
 ### Auth Header for Private Endpoints
 For private endpoints include:

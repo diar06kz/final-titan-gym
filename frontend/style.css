@@ -1,110 +1,398 @@
+/* =========================================
+   1. GLOBAL & RESET
+   ========================================= */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  width: 100%;
 }
 
 body {
-  font-family: "Poppins", Arial, sans-serif;
-  background: #f5f5f5;
-  color: #333;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  /* Светлый фон по умолчанию (вместо розового) */
+  background-color: #f0f2f5 !important;
+  color: #212529;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.night-theme .quote-to-start {
-  background: #1a1a1a;
-  color: #f4c2c2;
-  border-left-color: #f4c2c2;
-  box-shadow: 0 4px 12px rgba(244, 194, 194, 0.12);
+/* =========================================
+   2. VARIABLES (TITAN THEME)
+   ========================================= */
+:root {
+  --primary-color: #ff4500; /* Titan Orange (вместо розового) */
+  --secondary-color: #333333;
+  --dark-bg: #121212;
+  --text-main: #212529;
+  --text-light: #f8f9fa;
 }
 
-.night-theme .quote-to-start::before,
-.night-theme .quote-to-start::after {
-  color: #f4c2c2;
-  opacity: 0.25;
+/* =========================================
+   3. NIGHT THEME (DARK MODE FIXED)
+   ========================================= */
+/* Используем body.night-theme для глобального переопределения */
+body.night-theme {
+  background-color: #000000 !important; /* Принудительно черный фон */
+  color: #e0e0e0 !important;
 }
 
-.copy-snippet {
-  margin-top: 20px;
+/* Перекрашиваем карточки и блоки в темной теме */
+body.night-theme .card,
+body.night-theme .grid-sidebar,
+body.night-theme .grid-main,
+body.night-theme .program-card,
+body.night-theme .profile-card, /* Исправлено для профиля */
+body.night-theme .modal-content {
+  background-color: #1a1a1a !important; /* Темно-серый фон блоков */
+  color: #e0e0e0 !important;
+  border-color: #444 !important;
 }
 
-.quote-to-start {
-  display: block;
-  font-style: italic;
-  line-height: 1.7;
-  color: #5a3e36;
-  background: #fff0f3;
-  padding: 18px 22px;
-  border-left: 6px solid #e75480;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-  position: relative;
+/* Инпуты в темной теме */
+body.night-theme .form-control,
+body.night-theme .form-select {
+  background-color: #2a2a2a !important;
+  color: #fff !important;
+  border-color: #444 !important;
 }
 
-.quote-to-start::before {
-  content: "“";
-  font-size: 42px;
-  line-height: 1;
-  position: absolute;
-  top: 6px;
-  left: 14px;
-  color: #e75480;
-  opacity: 0.35;
+body.night-theme .form-control:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 69, 0, 0.25);
 }
 
-.quote-to-start::after {
-  content: "”";
-  font-size: 42px;
-  line-height: 1;
-  position: absolute;
-  bottom: -10px;
-  right: 14px;
-  color: #e75480;
-  opacity: 0.35;
+body.night-theme .input-group-text {
+  background-color: #333 !important;
+  color: #fff !important;
+  border-color: #444 !important;
 }
 
-.snippet-text {
-  font-size: 16px;
+/* Таблицы в темной теме */
+body.night-theme .table {
+  background-color: #1a1a1a !important;
+  color: #ddd !important;
+  border-color: #444;
+}
+body.night-theme .table thead th {
+  background-color: #222 !important;
+  color: #fff !important;
+  border-color: #444;
+}
+body.night-theme .table tbody tr:hover {
+  background-color: #252525 !important;
 }
 
-.text-brown {
-  color: #5a3e36 !important;
+/* Фильтры в темной теме */
+body.night-theme [data-cat] {
+  border-color: #555;
+  color: #aaa;
+}
+body.night-theme [data-cat]:hover,
+body.night-theme [data-cat].active {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+/* =========================================
+   4. MODALS (FIXED PINK BACKGROUND)
+   ========================================= */
+.modal-content {
+  background-color: #ffffff; /* Белый, чтобы не был прозрачным/розовым */
+  border-radius: 2px;
+  border: 1px solid #444;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.modal-header {
+  background-color: #111 !important; /* Всегда черная шапка */
+  color: #fff !important;
+  border-bottom: 2px solid var(--primary-color) !important;
+}
+
+.modal-header .btn-close {
+  filter: invert(1); /* Белый крестик */
+}
+
+.modal-body, .modal-footer {
+  /* Убираем любые наследуемые фоны */
+  background-color: transparent !important; 
+}
+
+/* =========================================
+   5. NAVBAR & BRAND
+   ========================================= */
+.navbar {
+  background-color: #000000 !important; /* Всегда черный */
+  border-bottom: 2px solid var(--primary-color) !important;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.navbar-brand {
+  color: #ffffff !important;
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 1px;
+  font-size: 1.5rem;
+}
+
+.nav-link {
+  color: #cccccc !important;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.nav-link:hover, .nav-link:focus, .nav-link.active {
+  color: var(--primary-color) !important;
+}
+
+/* =========================================
+   6. TEXT & LINKS
+   ========================================= */
+.text-brand {
+  color: var(--primary-color) !important; /* Оранжевый */
 }
 
 .link-accent {
   cursor: pointer;
-  color: #e75480;
-  font-weight: 600;
+  color: var(--primary-color);
+  font-weight: 700;
+  text-decoration: none;
 }
-
 .link-accent:hover {
   text-decoration: underline;
+  color: #ff6a00;
 }
 
+/* =========================================
+   7. BUTTONS & CONTROLS
+   ========================================= */
+.btn-dark {
+  background-color: #222 !important;
+  border-color: #222 !important;
+  color: #fff !important;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.btn-dark:hover {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #fff !important;
+}
+
+/* Переключатель темы (Switch) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+.switch input { display: none; }
+.slider {
+  position: absolute; cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #555;
+  transition: .4s;
+  border-radius: 4px;
+}
+.slider:before {
+  position: absolute; content: "";
+  height: 16px; width: 16px;
+  left: 4px; bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 2px;
+}
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* =========================================
+   8. SPECIFIC PAGES & COMPONENTS
+   ========================================= */
+
+/* Главная (Home) */
+.grid-header {
+  background: linear-gradient(135deg, #1a1a1a, #000000);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  font-size: 24px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 800;
+  border-bottom: 4px solid var(--primary-color);
+}
+
+.grid-sidebar, .grid-main {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.grid-sidebar h2, .grid-main h2 {
+  text-transform: uppercase;
+  font-weight: 800;
+  border-bottom: 3px solid var(--primary-color);
+  display: inline-block;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.stats-section {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 30px 0;
+  text-align: center;
+  flex-wrap: wrap;
+  background: rgba(0,0,0,0.03); /* Легкий фон для статистики */
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+body.night-theme .stats-section {
+  background: rgba(255,255,255,0.05);
+}
+
+.stat h2 {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 0;
+  font-weight: 900;
+}
+
+.stat p {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+/* Программы (Programs) */
+.program-card {
+  background: #fff;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.program-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  border-color: var(--primary-color);
+}
+
+.program-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  filter: grayscale(100%); /* Ч/Б фото по умолчанию */
+  transition: filter 0.3s;
+}
+
+.program-card:hover .program-img {
+  filter: grayscale(0%); /* Цвет при наведении */
+}
+
+.badge.text-bg-danger {
+  background-color: var(--primary-color) !important; /* Оранжевый бейдж */
+  color: #fff !important;
+}
+
+/* Фильтры категорий */
+[data-cat] {
+  border-radius: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid #ccc;
+  background: transparent;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+[data-cat]:hover,
+[data-cat].active {
+  background-color: #333 !important;
+  color: #fff !important;
+  border-color: #333 !important;
+}
+
+/* Профиль (Profile) */
+.profile-card {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 40px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  border-top: 5px solid var(--primary-color);
+}
+
+/* Цитата */
+.quote-to-start {
+  background: #222;
+  color: #eee;
+  padding: 20px;
+  border-left: 5px solid var(--primary-color);
+  font-style: italic;
+  font-weight: 600;
+}
+body.night-theme .quote-to-start {
+  background: #111;
+  color: #ccc;
+}
+
+/* Футер */
+.grid-footer {
+  background-color: #111;
+  color: #666;
+  padding: 20px;
+  margin-top: auto;
+  border-top: 3px solid var(--primary-color);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+/* Уведомления */
 #notification-container {
   position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 80px;
+  right: 20px; /* Справа сверху */
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .notification {
-  background-color: #ff6b81;
+  background-color: #222;
   color: #fff;
-  padding: 12px 20px;
+  padding: 15px 25px;
   margin-bottom: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-radius: 2px;
+  border-left: 5px solid var(--primary-color);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   opacity: 0;
-  transform: translateX(100%);
+  transform: translateX(50px);
   transition: all 0.3s ease;
-  font-size: 14px;
+  font-weight: 600;
 }
 
 .notification.show {
@@ -112,1140 +400,29 @@ body {
   transform: translateX(0);
 }
 
+/* Progress bar */
 #progress-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 8px;
-  background: #eee;
-  z-index: 9999;
+  height: 4px;
+  background: transparent;
+  z-index: 10000;
 }
-
 #progress-bar {
-  height: 8px;
-  width: 0%;
-  background: linear-gradient(90deg, #f4c2c2, #e75480);
-  transition: width 0.1s linear;
-}
-
-.grid-header {
-  background-color: #A32950;
-  color: #FFFFFF;
-  text-align: center;
-  padding: 15px;
-  font-size: 20px;
-  border-radius: 10px;
-}
-
-.grid-sidebar, .grid-main {
-  background-color: #f8f8f8;
-  color:#2F2727;
-  padding: 15px;
-  border-radius: 10px;
-}
-
-.grid-footer {
-  background-color: #F9DCDC;
-  padding: 15px;
-  margin-top: auto;
-  color: #5a3e36;
-  font-size: 17px;
-}
-
-.stats-section {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  padding: 30px;
-  text-align: center;
-  flex-wrap: wrap;
-}
-
-.stat h2 {
-  font-size: 3rem;
-  color: #9C2B2B;
-  margin-bottom: 10px;
-  transition: all 0.3s ease;
-}
-
-.stat p {
-  font-size: 1.1rem;
-  color: #444;
-}
-
-#dateTime {
-  color: #A32950;
-}
-
-.circle-img {
-  border-radius: 50%;
-}
-
-.lazy {
-  opacity: 0;
-  transition: opacity 0.5s ease-in;
-}
-
-.lazy.loaded {
-  opacity: 1;
-}
-
-/* =========================
-   PROGRAMS – CLEAN CARD STYLE
-========================= */
-
-.program-card {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 20px;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: 1px solid rgba(0,0,0,0.08);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 0;
+  background: var(--primary-color);
+  transition: width 0.2s;
 }
 
-.program-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.16);
-}
-
-.program-card h3 {
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-
-.program-card p {
-  font-size: 0.95rem;
-  color: #555;
-}
-
-.more-text {
-  display: none;
-  margin-bottom: 10px;
-}
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 26px;
-}
-
-.switch input {
-  display: none;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  border-radius: 34px;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 20px;
-  width: 20px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  border-radius: 50%;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #333;
-}
-
-input:checked + .slider:before {
-  transform: translateX(24px);
-}
-
+/* Анимации */
 .fade-in {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  transition: all 0.8s ease-out;
+  animation: fadeInUp 0.8s ease-out forwards;
 }
 
-.grid-sidebar, .grid-main, .big-photo {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.night-theme {
-  background-color: #121212 !important;
-  color: #e9ecef !important;
-}
-
-.night-theme .navbar,
-.night-theme footer {
-  background-color: #1e1e1e !important;
-  color: #f4c2c2;
-}
-
-.night-theme .nav-link,
-.night-theme .navbar-brand {
-  color: #f4c2c2 !important;
-}
-
-.night-theme .grid-header,
-.night-theme .grid-sidebar,
-.night-theme .grid-main {
-  background-color: #1a1a1a;
-  color: #f8f9fa;
-  box-shadow: 0 4px 12px rgba(244, 194, 194, 0.2);
-}
-
-.night-theme .program-card {
-  background: linear-gradient(145deg, #2b0a14 0%, #4b0f25 100%);
-  color: #fff !important;
-  box-shadow: 0 4px 12px rgba(255,255,255,0.1);
-}
-
-.night-theme .program-card h3,
-.night-theme .program-card p {
-  color: #fff !important;
-}
-
-.night-theme #dateTime {
-  color:#f4c2c2;
-}
-
-.night-theme .modal-content {
-  background-color: #000 !important;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255,255,255,0.2);
-}
-
-.night-theme .input-group .bi {
-  color: #ff8aa0;
-}
-
-@media (max-width: 576px) {
-  .stats-section {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .stat h2 {
-    font-size: 1.8rem;
-  }
-
-  .program-card p {
-    font-size: 16px;
-  }
-
-  .program-card img {
-    height: 240px;
-  }
-
-  footer {
-    font-size: 12px;
-    text-align: center;
-  }
-}
-
-/* =========================
-   PROGRAMS PAGE
-========================= */
-
-main h1 {
-  font-weight: 700;
-  color: #5a3e36;
-  letter-spacing: 1px;
-}
-
-[data-cat] {
-  border-radius: 20px;
-  padding: 6px 16px;
-  font-weight: 600;
-  transition: all 0.25s ease;
-}
-
-[data-cat].active,
-[data-cat]:hover {
-  background-color: #e75480 !important;
-  color: #fff !important;
-  border-color: #e75480 !important;
-}
-
-/* =========================
-   NIGHT THEME – PROGRAMS
-========================= */
-
-.night-theme main h1 {
-  color: #f4c2c2;
-}
-
-.night-theme .program-card {
-  background: linear-gradient(145deg, #1f1f1f, #2b2b2b);
-  box-shadow: 0 6px 20px rgba(255,255,255,0.08);
-}
-
-.night-theme .program-card p,
-.night-theme .program-card h3 {
-  color: #fff;
-}
-
-.night-theme .program-info span {
-  background-color: #333;
-  color: #f4c2c2;
-}
-
-.night-theme [data-cat] {
-  color: #f4c2c2;
-  border-color: #f4c2c2;
-}
-
-.night-theme [data-cat]:hover,
-.night-theme [data-cat].active {
-  background-color: #f4c2c2 !important;
-  color: #000 !important;
-}
-
-.program-card .btn,
-.program-card .btn.btn-dark,
-.program-card a.btn {
-  width: 100% !important;
-  background: linear-gradient(135deg, #e75480, #f4c2c2) !important;
-  color: #fff !important;
-  border: none !important;
-  border-radius: 14px !important;
-  padding: 12px 0 !important;
-  font-weight: 700 !important;
-  font-size: 15px !important;
-  transition: all 0.25s ease !important;
-}
-
-.program-card .btn:hover,
-.program-card a.btn:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 10px 25px rgba(231,84,128,0.45) !important;
-}
-
-.night-theme .program-card .btn,
-.night-theme .program-card a.btn {
-  background: linear-gradient(135deg, #ff8aa0, #e75480) !important;
-  color: #000 !important;
-}
-
-.program-card button,
-.program-card a {
-  width: 100% !important;
-  background: linear-gradient(135deg, #e75480, #f4c2c2) !important;
-  color: #fff !important;
-  border: none !important;
-  border-radius: 14px !important;
-  padding: 12px 0 !important;
-  font-weight: 700 !important;
-  font-size: 15px !important;
-  text-decoration: none !important;
-  display: block !important;
-  text-align: center !important;
-  transition: all 0.25s ease !important;
-}
-
-.program-card button:hover,
-.program-card a:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 10px 25px rgba(231,84,128,0.45) !important;
-}
-
-/* Night theme */
-.night-theme .program-card button,
-.night-theme .program-card a {
-  background: linear-gradient(135deg, #ff8aa0, #e75480) !important;
-  color: #000 !important;
-}
-
-#bookingModal .modal-content{
-  border-radius:22px!important;
-  border:none!important;
-  box-shadow:0 22px 55px rgba(0,0,0,.22)!important;
-}
-
-#bookingModal .modal-title{
-  font-weight:800!important;
-  color:#5a3e36!important;
-}
-
-#bookingModal .modal-body .form-label{
-  font-weight:700!important;
-  color:#5a3e36!important;
-}
-
-#bookingModal .modal-body .form-control{
-  border-radius:14px!important;
-  padding:10px 12px!important;
-  border:1px solid rgba(0,0,0,.15)!important;
-}
-
-#bookingModal .modal-body .form-control:focus{
-  border-color:#e75480!important;
-  box-shadow:0 0 0 .2rem rgba(231,84,128,.18)!important;
-}
-
-#bookingModal #bmProgramTitle{
-  color:#e75480!important;
-  font-weight:700!important;
-}
-
-#bookingModal .btn.btn-secondary{
-  border-radius:12px!important;
-  font-weight:700!important;
-  border:none!important;
-  background:#d7d7d7!important;
-  color:#222!important;
-}
-
-#bookingModal .btn.btn-secondary:hover{
-  background:#bfbfbf!important;
-}
-
-#bookingModal #bmConfirmBtn,
-#bookingModal .btn.btn-dark{
-  border-radius:12px!important;
-  font-weight:800!important;
-  border:none!important;
-  background:linear-gradient(135deg,#e75480,#f4c2c2)!important;
-  color:#fff!important;
-  padding:10px 22px!important;
-  transition:all .25s ease!important;
-}
-
-#bookingModal #bmConfirmBtn:hover,
-#bookingModal .btn.btn-dark:hover{
-  transform:translateY(-2px)!important;
-  box-shadow:0 10px 25px rgba(231,84,128,.35)!important;
-}
-
-.modal-backdrop.show{
-  background-color:rgba(244,194,194,.55)!important;
-}
-
-.night-theme #bookingModal .modal-content{
-  background:#1e1e1e!important;
-  color:#fff!important;
-}
-
-.night-theme #bookingModal .modal-title,
-.night-theme #bookingModal .modal-body .form-label{
-  color:#f4c2c2!important;
-}
-
-.night-theme #bookingModal .modal-body .form-control{
-  background:#2a2a2a!important;
-  color:#fff!important;
-  border-color:rgba(255,255,255,.15)!important;
-}
-
-.night-theme #bookingModal #bmConfirmBtn{
-  background:linear-gradient(135deg,#ff8aa0,#e75480)!important;
-  color:#000!important;
-}
-
-#profileLocked,
-#profilePanel #profileForm{
-  background:#fff0f3!important;
-  border-radius:22px!important;
-  border:1px solid rgba(0,0,0,.06)!important;
-  box-shadow:0 18px 45px rgba(0,0,0,.10)!important;
-}
-
-main h1{
-  font-weight:800!important;
-  color:#5a3e36!important;
-  letter-spacing:1px!important;
-}
-
-#profilePanel .form-label{
-  font-weight:800!important;
-  color:#5a3e36!important;
-}
-
-#profilePanel .form-control{
-  border-radius:14px!important;
-  padding:10px 12px!important;
-  border:1px solid rgba(0,0,0,.14)!important;
-  background:#fff!important;
-}
-
-#profilePanel .form-control:focus{
-  border-color:#e75480!important;
-  box-shadow:0 0 0 .2rem rgba(231,84,128,.18)!important;
-}
-
-#profilePanel .form-control:disabled{
-  background:#eef1f4!important;
-  color:#222!important;
-  opacity:1!important;
-}
-
-#profilePanel .form-text{
-  color:rgba(90,62,54,.75)!important;
-  font-weight:600!important;
-}
-
-#profilePanel .btn.btn-secondary{
-  border-radius:14px!important;
-  font-weight:800!important;
-  border:none!important;
-  background:#6c757d!important;
-  color:#fff!important;
-  padding:12px 14px!important;
-}
-
-#profilePanel .btn.btn-secondary:hover{
-  filter:brightness(.95)!important;
-}
-
-#profilePanel #logoutBtn,
-#profilePanel .btn.btn-dark{
-  border-radius:14px!important;
-  font-weight:800!important;
-  border:none!important;
-  background:linear-gradient(135deg,#e75480,#f4c2c2)!important;
-  color:#fff!important;
-  padding:12px 14px!important;
-  transition:all .25s ease!important;
-}
-
-#profilePanel #logoutBtn:hover,
-#profilePanel .btn.btn-dark:hover{
-  transform:translateY(-2px)!important;
-  box-shadow:0 12px 28px rgba(231,84,128,.35)!important;
-}
-
-#profileLocked .btn.btn-dark{
-  border-radius:14px!important;
-  font-weight:800!important;
-  border:none!important;
-  background:linear-gradient(135deg,#e75480,#f4c2c2)!important;
-  color:#fff!important;
-  padding:12px 16px!important;
-}
-
-.night-theme main h1{
-  color:#f4c2c2!important;
-}
-
-.night-theme #profileLocked,
-.night-theme #profilePanel #profileForm{
-  background:#1e1e1e!important;
-  border-color:rgba(255,255,255,.10)!important;
-  box-shadow:0 18px 45px rgba(0,0,0,.45)!important;
-}
-
-.night-theme #profilePanel .form-label{
-  color:#f4c2c2!important;
-}
-
-.night-theme #profilePanel .form-control{
-  background:#2a2a2a!important;
-  color:#fff!important;
-  border-color:rgba(255,255,255,.14)!important;
-}
-
-.night-theme #profilePanel .form-control:focus{
-  border-color:#ff8aa0!important;
-  box-shadow:0 0 0 .2rem rgba(255,138,160,.18)!important;
-}
-
-.night-theme #profilePanel .form-control:disabled{
-  background:#2f2f2f!important;
-  color:#fff!important;
-}
-
-.night-theme #profilePanel .form-text{
-  color:rgba(244,194,194,.75)!important;
-}
-
-.night-theme #profilePanel #logoutBtn,
-.night-theme #profilePanel .btn.btn-dark,
-.night-theme #profileLocked .btn.btn-dark{
-  background:linear-gradient(135deg,#ff8aa0,#e75480)!important;
-  color:#000!important;
-}
-
-#profilePanel #profileForm .row{
-  display:flex!important;
-  flex-direction:column!important;
-  gap:16px!important;
-}
-
-#profilePanel #profileForm .row > [class*="col-"]{
-  width:100%!important;
-  max-width:100%!important;
-  flex:0 0 100%!important;
-}
-
-#profilePanel #profileForm .row.g-3{
-  --bs-gutter-x:0!important;
-  --bs-gutter-y:0!important;
-}
-
-#profilePanel #profileForm .form-label{
-  margin-bottom:6px!important;
-}
-
-#profilePanel #profileForm .form-control{
-  width:100%!important;
-}
-
-.program-card{
-  background:#fff !important;
-  border-radius:22px !important;
-  overflow:hidden !important;
-  border:1px solid rgba(0,0,0,.08) !important;
-  box-shadow:0 12px 30px rgba(0,0,0,.10) !important;
-  padding:0 !important;
-}
-
-.program-img{
-  width:100% !important;
-  height:200px !important;
-  object-fit:cover !important;
-  display:block !important;
-  margin:0 !important;
-  border:none !important;
-  border-radius:22px 22px 0 0 !important;
-}
-
-.program-card .card-body{
-  padding:18px 20px 20px !important;
-}
-
-.program-card .badge.text-bg-danger{
-  border-radius:999px !important;
-  padding:6px 10px !important;
-}
-
-.program-card .btn,
-.program-card .btn.btn-dark,
-.program-card button{
-  width:100% !important;
-  border:none !important;
-  border-radius:16px !important;
-  padding:12px 0 !important;
-  font-weight:800 !important;
-  background:linear-gradient(135deg,#e75480,#f4c2c2) !important;
-  color:#fff !important;
-}
-
-.program-card .btn:hover,
-.program-card button:hover{
-  transform:translateY(-2px) !important;
-  box-shadow:0 12px 26px rgba(231,84,128,.35) !important;
-}
-
-.night-theme .program-card{
-  background:#1e1e1e !important;
-  border-color:rgba(255,255,255,.10) !important;
-  box-shadow:0 18px 45px rgba(0,0,0,.55) !important;
-}
-
-.night-theme .program-card .card-title,
-.night-theme .program-card .card-text{
-  color:#fff !important;
-}
-
-.night-theme .program-card .btn,
-.night-theme .program-card button{
-  background:linear-gradient(135deg,#ff8aa0,#e75480) !important;
-  color:#000 !important;
-}
-/* ===== PROGRAMS: bigger image + smaller card ===== */
-
-.program-card{
-  border-radius: 18px !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-}
-
-.program-img{
-  width: 100% !important;
-  height: 270px !important;        
-  object-fit: cover !important;
-  object-position: center !important;
-  transform: none !important;       
-}
-
-.program-card .card-body{
-  padding: 12px 14px 14px !important;
-}
-
-.program-card .card-title{
-  font-size: 1.05rem !important;
-  margin-bottom: 4px !important;
-}
-
-.program-card .card-text{
-  font-size: 0.9rem !important;
-  margin-bottom: 10px !important;
-}
-
-.program-card .btn,
-.program-card button{
-  padding: 10px 0 !important;        
-  border-radius: 14px !important;
-}
-
-/* =========================
-   MY BOOKINGS (Programs page)
-========================= */
-
-#bookingsTable{
-  border-radius: 18px !important;
-  overflow: hidden !important;
-  background: #fff !important;
-  box-shadow: 0 12px 30px rgba(0,0,0,.08) !important;
-  border: 1px solid rgba(0,0,0,.06) !important;
-}
-
-#bookingsTable thead th{
-  background: #fff0f3 !important;
-  color: #5a3e36 !important;
-  font-weight: 800 !important;
-  border-bottom: 1px solid rgba(0,0,0,.06) !important;
-  padding: 14px 16px !important;
-  white-space: nowrap !important;
-}
-
-#bookingsTable tbody td{
-  padding: 14px 16px !important;
-  border-top: 1px solid rgba(0,0,0,.06) !important;
-  color: #333 !important;
-  vertical-align: middle !important;
-}
-
-#bookingsTable tbody tr:hover{
-  background: rgba(244,194,194,.18) !important;
-}
-
-#bookingsEmpty{
-  background: #fff0f3 !important;
-  color: #5a3e36 !important;
-  border: 1px solid rgba(0,0,0,.06) !important;
-  border-radius: 16px !important;
-  padding: 14px 16px !important;
-  box-shadow: 0 10px 24px rgba(0,0,0,.06) !important;
-}
-
-/* Delete button */
-#bookingsTable [data-del-booking]{
-  border-radius: 12px !important;
-  font-weight: 800 !important;
-  padding: 8px 14px !important;
-  border: 1px solid rgba(231,84,128,.55) !important;
-  color: #e75480 !important;
-  background: transparent !important;
-  transition: all .2s ease !important;
-}
-
-#bookingsTable [data-del-booking]:hover{
-  background: #e75480 !important;
-  color: #fff !important;
-  border-color: #e75480 !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 10px 20px rgba(231,84,128,.25) !important;
-}
-
-/* "My bookings" title */
-main h2{
-  font-weight: 900 !important;
-  color: #5a3e36 !important;
-  letter-spacing: .5px !important;
-}
-
-/* =========================
-   NIGHT THEME – MY BOOKINGS
-========================= */
-
-.night-theme #bookingsTable{
-  background: #1e1e1e !important;
-  border-color: rgba(255,255,255,.10) !important;
-  box-shadow: 0 18px 45px rgba(0,0,0,.55) !important;
-}
-
-.night-theme #bookingsTable thead th{
-  background: #2a2a2a !important;
-  color: #f4c2c2 !important;
-  border-bottom-color: rgba(255,255,255,.10) !important;
-}
-
-.night-theme #bookingsTable tbody td{
-  color: #fff !important;
-  border-top-color: rgba(255,255,255,.10) !important;
-}
-
-.night-theme #bookingsTable tbody tr:hover{
-  background: rgba(244,194,194,.08) !important;
-}
-
-.night-theme #bookingsEmpty{
-  background: #1e1e1e !important;
-  color: #f4c2c2 !important;
-  border-color: rgba(255,255,255,.10) !important;
-}
-
-.night-theme #bookingsTable [data-del-booking]{
-  border-color: rgba(255,138,160,.55) !important;
-  color: #ff8aa0 !important;
-}
-
-.night-theme #bookingsTable [data-del-booking]:hover{
-  background: linear-gradient(135deg,#ff8aa0,#e75480) !important;
-  color: #000 !important;
-  border-color: transparent !important;
-}
-
-.night-theme main h2{
-  color: #f4c2c2 !important;
-}
-
-
-/* ===============================
-   STATUS (Bloom GYM style)
-   =============================== */
-
-.badge {
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 6px 14px;
-  border-radius: 999px;
-  text-transform: lowercase;
-}
-
-/* booked */
-.badge.bg-success {
-  background-color: #f4c2c2 !important; /* пудрово-розовый */
-  color: #6b3e2e;                      /* коричневый текст */
-}
-
-/* cancelled */
-.badge.bg-warning {
-  background-color: #f8e1e7 !important; /* светло-розовый */
-  color: #9a5b6b;                        /* мягкий бордовый */
-}
-
-
-/* ===============================
-   ACTION BUTTONS (Bloom style)
-   =============================== */
-
-.table .btn {
-  font-size: 0.85rem;
-  padding: 6px 16px;
-  border-radius: 10px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-/* Update */
-.btn-outline-secondary {
-  color: #6b3e2e;              
-  border-color: #d6a5b2;       
-  background-color: #ffffff;
-}
-
-.btn-outline-secondary:hover {
-  background-color: #f8e1e7;   
-  border-color: #c98c9a;
-  color: #4a2a1f;
-}
-
-/* Cancel */
-.btn-outline-warning {
-  color: #8a4b5d;             
-  border-color: #e6b8c3;
-  background-color: #ffffff;
-}
-
-.btn-outline-warning:hover {
-  background-color: #f4c2c2; 
-  border-color: #d49aa8;
-  color: #6b3e2e;
-}
-
-#authModal .modal-dialog {
-  max-width: 460px;
-}
-
-#authModal .modal-content {
-  background: #fff0f3;
-  border: 1px solid rgba(163, 41, 80, 0.18);
-  border-radius: 22px;
-  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.18);
-}
-
-#authModal .modal-header,
-#authModal .modal-footer {
-  border: 0;
-}
-
-#authModal h4 {
-  color: #5a2a2a;
-  font-weight: 800;
-  letter-spacing: 0.2px;
-}
-
-#authModal .form-label {
-  color: #5a2a2a;
-}
-
-#authModal .input-group-text {
-  background: rgba(244, 194, 194, 0.55);
-  border: 1px solid rgba(163, 41, 80, 0.18);
-  color: #7a2f3b;
-  border-right: 0;
-  border-radius: 14px 0 0 14px;
-}
-
-#authModal .form-control {
-  background: #ffffff;
-  border: 1px solid rgba(163, 41, 80, 0.18);
-  border-left: 0;
-  border-radius: 0 14px 14px 0;
-  padding: 11px 12px;
-  box-shadow: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
-}
-
-#authModal .form-control:focus {
-  border-color: rgba(163, 41, 80, 0.55);
-  box-shadow: 0 0 0 0.2rem rgba(163, 41, 80, 0.18);
-}
-
-#authModal .input-group:focus-within .input-group-text {
-  border-color: rgba(163, 41, 80, 0.55);
-  box-shadow: 0 0 0 0.2rem rgba(163, 41, 80, 0.12);
-}
-
-#authModal .btn.btn-dark {
-  background: #1f1f1f;
-  border: 0;
-  border-radius: 14px;
-  padding: 11px 14px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
-}
-
-#authModal .btn.btn-dark:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
-  background: #111111;
-}
-
-#authModal .btn.btn-dark:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-#authModal .link-accent {
-  color: #a32950;
-  font-weight: 800;
-  cursor: pointer;
-  text-decoration: none;
-  border-bottom: 1px dashed rgba(163, 41, 80, 0.55);
-  padding-bottom: 1px;
-  transition: opacity 0.12s ease, border-color 0.12s ease;
-}
-
-#authModal .link-accent:hover {
-  opacity: 0.85;
-  border-bottom-color: rgba(163, 41, 80, 0.85);
-}
-
-#authModal #signupGlobalError,
-#authModal #signinGlobalError {
-  background: rgba(220, 53, 69, 0.08);
-  border: 1px solid rgba(220, 53, 69, 0.25);
-  border-radius: 14px;
-  padding: 10px 12px;
-}
-
-body.night-theme #authModal .modal-content {
-  background: rgba(30, 18, 22, 0.96);
-  border-color: rgba(244, 194, 194, 0.16);
-}
-
-body.night-theme #authModal h4,
-body.night-theme #authModal .form-label {
-  color: #ffd6df;
-}
-
-body.night-theme #authModal .input-group-text {
-  background: rgba(244, 194, 194, 0.12);
-  border-color: rgba(244, 194, 194, 0.16);
-  color: #ffd6df;
-}
-
-body.night-theme #authModal .form-control {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(244, 194, 194, 0.16);
-  color: #fff0f3;
-}
-
-body.night-theme #authModal .form-control::placeholder {
-  color: rgba(255, 240, 243, 0.65);
-}
-
-body.night-theme #authModal .form-control:focus {
-  box-shadow: 0 0 0 0.2rem rgba(244, 194, 194, 0.16);
-}
-
-body.night-theme #authModal .btn.btn-dark {
-  background: #f4c2c2;
-  color: #1b1b1b;
-}
-
-body.night-theme #authModal .btn.btn-dark:hover {
-  background: #f0b6b6;
-}
-
-body.night-theme #authModal .link-accent {
-  color: #f4c2c2;
-  border-bottom-color: rgba(244, 194, 194, 0.65);
-}
-#editBookingModal .modal-dialog {
-  max-width: 460px;
-}
-
-#editBookingModal .modal-content {
-  background: #fff0f3;
-  border: 1px solid rgba(163, 41, 80, 0.18);
-  border-radius: 22px;
-  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.18);
-}
-
-#editBookingModal .modal-header {
-  border: 0;
-  padding: 18px 18px 8px;
-}
-
-#editBookingModal .modal-title {
-  color: #5a2a2a;
-  font-weight: 800;
-  letter-spacing: 0.2px;
-}
-
-#editBookingModal .btn-close {
-  opacity: 0.7;
-}
-
-#editBookingModal .btn-close:hover {
-  opacity: 1;
-}
-
-#editBookingModal .modal-body {
-  padding: 12px 18px 6px;
-}
-
-#editBookingModal .form-label {
-  color: #5a2a2a;
-}
-
-#editBookingModal .form-control,
-#editBookingModal .form-select {
-  background: #ffffff;
-  border: 1px solid rgba(163, 41, 80, 0.18);
-  border-radius: 14px;
-  padding: 11px 12px;
-  box-shadow: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
-}
-
-#editBookingModal .form-control:focus,
-#editBookingModal .form-select:focus {
-  border-color: rgba(163, 41, 80, 0.55);
-  box-shadow: 0 0 0 0.2rem rgba(163, 41, 80, 0.18);
-}
-
-#editBookingModal #editError {
-  background: rgba(220, 53, 69, 0.08);
-  border: 1px solid rgba(220, 53, 69, 0.25);
-  border-radius: 14px;
-  padding: 10px 12px;
-}
-
-#editBookingModal .modal-footer {
-  border: 0;
-  padding: 12px 18px 18px;
-  gap: 10px;
-}
-
-#editBookingModal .btn.btn-secondary {
-  border-radius: 14px;
-  padding: 10px 14px;
-  font-weight: 700;
-}
-
-#editBookingModal .btn.btn-dark {
-  background: #1f1f1f;
-  border: 0;
-  border-radius: 14px;
-  padding: 10px 14px;
-  font-weight: 800;
-  letter-spacing: 0.2px;
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
-}
-
-#editBookingModal .btn.btn-dark:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
-  background: #111111;
-}
-
-#editBookingModal .btn.btn-dark:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-body.night-theme #editBookingModal .modal-content {
-  background: rgba(30, 18, 22, 0.96);
-  border-color: rgba(244, 194, 194, 0.16);
-}
-
-body.night-theme #editBookingModal .modal-title,
-body.night-theme #editBookingModal .form-label {
-  color: #ffd6df;
-}
-
-body.night-theme #editBookingModal .form-control,
-body.night-theme #editBookingModal .form-select {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(244, 194, 194, 0.16);
-  color: #fff0f3;
-}
-
-body.night-theme #editBookingModal .form-control::placeholder {
-  color: rgba(255, 240, 243, 0.65);
-}
-
-body.night-theme #editBookingModal .form-control:focus,
-body.night-theme #editBookingModal .form-select:focus {
-  box-shadow: 0 0 0 0.2rem rgba(244, 194, 194, 0.16);
-}
-
-body.night-theme #editBookingModal .btn.btn-dark {
-  background: #f4c2c2;
-  color: #1b1b1b;
-}
-
-body.night-theme #editBookingModal .btn.btn-dark:hover {
-  background: #f0b6b6;
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
